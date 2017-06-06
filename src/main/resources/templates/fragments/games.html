@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="games" id="games">
+
+    <h2 th:text="'Games of ' + ${currentYear}">Games of CURRENT_YEAR</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Score</th>
+            <th>Trophies</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gamesOfCurrentYear}">
+            <td th:text="${game.title}">Some Title</td>
+            <td th:text="${game.score}">5 / 10</td>
+            <td th:text="${game.progress}">85%</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 th:text="'Games of ' + ${lastYear}">Games of LAST_YEAR</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Score</th>
+            <th>Trophies</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gamesOfLastYear}">
+            <td th:text="${game.title}">Some Title</td>
+            <td th:text="${game.score}">5 / 10</td>
+            <td th:text="${game.progress}">85%</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
