@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <body>
-<div th:fragment="games" id="games">
+<div th:fragment="games">
 
-    <h2 th:text="'Games of ' + ${currentYear}">Games of CURRENT_YEAR</h2>
+    <div class="sectionHeader" th:text="'Games of ' + ${currentYear}">Games of CURRENT_YEAR</div>
 
     <table>
         <thead>
@@ -22,7 +22,7 @@
         </tbody>
     </table>
 
-    <h2 th:text="'Games of ' + ${lastYear}">Games of LAST_YEAR</h2>
+    <div class="sectionHeader" th:text="'Games of ' + ${lastYear}">Games of LAST_YEAR</div>
 
     <table>
         <thead>

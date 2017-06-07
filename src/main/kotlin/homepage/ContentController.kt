@@ -14,7 +14,7 @@ class ContentController(
         val gameService: GameService
 ) {
 
-    private val gameComparator = compareByDescending<GameData> { it.score }.thenByDescending { it.progress }
+    private val gameComparator = compareByDescending<GameData> { it.score }.thenBy { it.title }
 
     @GetMapping
     fun index(model: Model): String {
@@ -26,15 +26,19 @@ class ContentController(
     private fun addGamesOfCurrentYearData(model: Model) {
         val currentYear = LocalDate.now().year
         val games = getGamesOfYear(currentYear)
-        model.addAttribute("gamesOfCurrentYear", games)
-        model.addAttribute("currentYear", currentYear)
+        with(model) {
+            addAttribute("gamesOfCurrentYear", games)
+            addAttribute("currentYear", currentYear)
+        }
     }
 
     private fun addGamesOfLastYearData(model: Model) {
         val lastYear = LocalDate.now().minusYears(1).year
         val games = getGamesOfYear(lastYear)
-        model.addAttribute("gamesOfLastYear", games)
-        model.addAttribute("lastYear", lastYear)
+        with(model) {
+            addAttribute("gamesOfLastYear", games)
+            addAttribute("lastYear", lastYear)
+        }
     }
 
     private fun getGamesOfYear(year: Int): List<GameModel> {

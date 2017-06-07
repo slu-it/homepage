@@ -9,14 +9,13 @@
 </head>
 <body>
 
-<h1>About Me</h1>
-<div th:insert="fragments/about :: about"></div>
+<div id="header" th:insert="fragments/header :: header"></div>
 
-<hr>
+<div class="section" id="about" th:insert="fragments/about :: about"></div>
 
-<h1>Gaming</h1>
-<div th:insert="fragments/games :: games"></div>
+<div class="section" id="games" th:insert="fragments/games :: games"></div>
 
+<div id="footer" th:insert="fragments/footer :: footer"></div>
 
 </body>
 </html>
