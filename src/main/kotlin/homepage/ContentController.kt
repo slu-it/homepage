@@ -1,6 +1,8 @@
 package homepage
 
-import homepage.GameService.GameData
+import homepage.gaming.GameData
+import homepage.gaming.GameService
+import homepage.social.SocialService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
@@ -11,16 +13,22 @@ import java.util.stream.Collectors.toList
 @Controller
 @RequestMapping("/")
 class ContentController(
-        val gameService: GameService
+        val gameService: GameService,
+        val socialService: SocialService
 ) {
 
     private val gameComparator = compareByDescending<GameData> { it.score }.thenBy { it.title }
 
     @GetMapping
     fun index(model: Model): String {
+        addSocialLinks(model)
         addGamesOfCurrentYearData(model)
         addGamesOfLastYearData(model)
         return "index.html"
+    }
+
+    private fun addSocialLinks(model: Model) {
+        model.addAttribute("socialLinks", socialService.getSocialLinks())
     }
 
     private fun addGamesOfCurrentYearData(model: Model) {

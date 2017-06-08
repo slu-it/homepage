@@ -3,7 +3,14 @@
 <body>
 <div th:fragment="footer">
 
-    <div id="socialLinks">abc</div>
+    <div id="socialLinks">
+        <a th:href="${socialLinks.twitter}" target="_blank">
+            <img class="socialIcon" th:src="@{/img/social-twitter.png}" src="../../static/img/social-twitter.png"></a>
+        <a th:href="${socialLinks.github}" target="_blank">
+            <img class="socialIcon" th:src="@{/img/social-github.png}" src="../../static/img/social-github.png"></a>
+        <a th:href="${socialLinks.xing}" target="_blank">
+            <img class="socialIcon" th:src="@{/img/social-xing.png}" src="../../static/img/social-xing.png"></a>
+    </div>
 
 </div>
 </body>

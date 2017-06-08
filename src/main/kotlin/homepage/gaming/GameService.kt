@@ -1,6 +1,7 @@
-package homepage
+package homepage.gaming
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import homepage.persistence.LocalGitRepository
 import org.springframework.stereotype.Service
 import java.nio.file.Files
 import java.util.stream.Stream
@@ -19,13 +20,5 @@ class GameService(
                 .filter { it.extension == "game" }
                 .map { mapper.readValue(it, GameData::class.java) }
     }
-
-    data class GameData(
-            var year: Int? = null,
-            var title: String? = null,
-            var platform: String? = null,
-            var score: Int? = null,
-            var progress: Float? = null
-    )
 
 }

@@ -1,4 +1,4 @@
-package homepage
+package homepage.persistence
 
 import org.eclipse.jgit.api.Git
 import org.eclipse.jgit.api.ResetCommand

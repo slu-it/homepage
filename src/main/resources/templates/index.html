@@ -11,9 +11,66 @@
 
 <div id="header" th:insert="fragments/header :: header"></div>
 
-<div class="section" id="about" th:insert="fragments/about :: about"></div>
+<div class="section" id="about">
 
-<div class="section" id="games" th:insert="fragments/games :: games"></div>
+    <div>
+        <img th:src="@{/img/slu-200x200.png}" src="../../static/img/slu-200x200.png">
+    </div>
+
+    <p>
+        My name is <em>Stefan Ludwig</em> and I’m a software engineering consultant
+        <a href="http://www.novatec-gmbh.de" target="_blank">@NovaTec Consulting GmbH</a>
+        in Stuttgart, Germany. There I lead the <em>test automation</em> competence group.
+        My work allows me to be a part of several open source projects:
+    </p>
+    <div class="ossProject">
+        <a href="https://github.com/testIT-WebTester/webtester2-core" target="_blank">WebTester</a>
+    </div>
+    <div class="ossProject">
+        <a href="https://github.com/testIT-LivingDoc/livingdoc2" target="_blank">LivingDoc</a>
+    </div>
+    <div class="ossProject">
+        <a href="https://github.com/testIT-ResultRepository/resultrepository-core" target="_blank">ResultRepository</a>
+    </div>
+    <p>
+        On technical topics I usually blog on our official
+        <a href="http://blog.novatec-gmbh.de/author/slu/" target="_blank">company blog</a>.
+    </p>
+
+</div>
+
+<div class="section" id="games">
+
+    <h1>Gaming</h1>
+
+    <div id="psnProfile">
+        <a href="http://psnprofiles.com/Avaj85" target="_blank">
+            <img src="http://card.psnprofiles.com/1/Avaj85.png">
+        </a>
+    </div>
+
+    <h2 th:text="'Games of ' + ${currentYear}">Games of CURRENT_YEAR</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Platform</th>
+            <th>Score</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gamesOfCurrentYear}">
+            <td th:text="${game.title}">Some Title</td>
+            <td th:text="${game.platform}">Platform</td>
+            <td th:text="${game.score}">5 / 10</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div id="endOfPage"></div>
 
 <div id="footer" th:insert="fragments/footer :: footer"></div>
 

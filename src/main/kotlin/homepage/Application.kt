@@ -1,30 +1,28 @@
 package homepage
 
+import homepage.persistence.LocalGitRepository
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Bean
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.SchedulingConfigurer
-import org.springframework.scheduling.config.ScheduledTaskRegistrar
 import java.util.concurrent.TimeUnit
 
+
+@EnableScheduling
 @SpringBootApplication
 class Application {
 
-    @Configuration
-    @EnableScheduling
-    class SchedulingConfiguration(
-            val repository: LocalGitRepository
-    ) : SchedulingConfigurer {
-
-        override fun configureTasks(taskRegistrar: ScheduledTaskRegistrar) {
-            taskRegistrar.addFixedDelayTask(repository::refresh, TimeUnit.HOURS.toMillis(1))
-        }
-
+    @Bean
+    fun schedulingConfigurer(repository: LocalGitRepository): SchedulingConfigurer = SchedulingConfigurer {
+        it.addFixedDelayTask({ repository.refresh() }, TimeUnit.HOURS.toMillis(1))
     }
 
-}
+    companion object {
+        @JvmStatic
+        fun main(args: Array<String>) {
+            SpringApplication.run(Application::class.java, *args)
+        }
+    }
 
-fun main(args: Array<String>) {
-    SpringApplication.run(Application::class.java, *args)
 }
