@@ -1,0 +1,4 @@
+hub:
+  image: sluit/homepage
+  ports:
+    - "8080:80"
