@@ -11,7 +11,6 @@ import java.time.LocalDate
 import java.util.stream.Collectors.toList
 
 @Controller
-@RequestMapping("/")
 class ContentController(
         val gameService: GameService,
         val socialService: SocialService
@@ -19,12 +18,24 @@ class ContentController(
 
     private val gameComparator = compareByDescending<GameData> { it.score }.thenBy { it.title }
 
-    @GetMapping
+    @GetMapping("/")
     fun index(model: Model): String {
-        addSocialLinks(model)
+        addTemplateData(model)
+        addGamesOfCurrentYearData(model)
+        return "index.html"
+    }
+
+    @GetMapping("/games")
+    fun games(model: Model): String {
+        addTemplateData(model)
         addGamesOfCurrentYearData(model)
         addGamesOfLastYearData(model)
-        return "index.html"
+        addGamesOfOtherYears(model)
+        return "games.html"
+    }
+
+    private fun addTemplateData(model: Model) {
+        addSocialLinks(model)
     }
 
     private fun addSocialLinks(model: Model) {
@@ -33,7 +44,7 @@ class ContentController(
 
     private fun addGamesOfCurrentYearData(model: Model) {
         val currentYear = LocalDate.now().year
-        val games = getGamesOfYear(currentYear)
+        val games = getGames({ it.year == currentYear })
         with(model) {
             addAttribute("gamesOfCurrentYear", games)
             addAttribute("currentYear", currentYear)
@@ -42,18 +53,26 @@ class ContentController(
 
     private fun addGamesOfLastYearData(model: Model) {
         val lastYear = LocalDate.now().minusYears(1).year
-        val games = getGamesOfYear(lastYear)
+        val games = getGames({ it.year == lastYear })
         with(model) {
             addAttribute("gamesOfLastYear", games)
             addAttribute("lastYear", lastYear)
         }
     }
 
-    private fun getGamesOfYear(year: Int): List<GameModel> {
+    private fun addGamesOfOtherYears(model: Model) {
+        val lastYear = LocalDate.now().minusYears(1).year
+        val games = getGames({ it.year < lastYear })
+        with(model) {
+            addAttribute("gamesOfOtherYears", games)
+        }
+    }
+
+    private fun getGames(filter: (GameModel) -> Boolean): List<GameModel> {
         return gameService.getAll()
                 .sorted(gameComparator)
                 .map(this::transform)
-                .filter { it.year == year }
+                .filter(filter)
                 .collect(toList())
     }
 

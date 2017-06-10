@@ -39,6 +39,10 @@ td {
     padding: 5px 10px;
 }
 
+.centered {
+    text-align: center;
+}
+
 .section {
     margin-top: 3em;
 }

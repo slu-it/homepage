@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>SLU-IT - Gaming</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../static/css/style.css"
+            th:href="@{/css/style.css}"
+            rel="stylesheet" media="screen"/>
+</head>
+<body>
+
+<div id="header" th:insert="fragments/header :: header"></div>
+
+<div class="section" id="games">
+
+    <h1>Gaming</h1>
+
+    <div id="psnProfile">
+        <a href="http://psnprofiles.com/Avaj85" target="_blank">
+            <img src="http://card.psnprofiles.com/1/Avaj85.png">
+        </a>
+    </div>
+
+    <h2 th:text="'Games of ' + ${currentYear}">Games of CURRENT_YEAR</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Platform</th>
+            <th>Score</th>
+            <th>Trophies</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gamesOfCurrentYear}">
+            <td th:text="${game.title}">Some Title</td>
+            <td th:text="${game.platform}">Platform</td>
+            <td th:text="${game.score}">5 / 10</td>
+            <td th:text="${game.progress}">100%</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 th:text="'Games of ' + ${lastYear}">Games of LAST_YEAR</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Platform</th>
+            <th>Score</th>
+            <th>Trophies</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gamesOfLastYear}">
+            <td th:text="${game.title}">Some Title</td>
+            <td th:text="${game.platform}">Platform</td>
+            <td th:text="${game.score}">5 / 10</td>
+            <td th:text="${game.progress}">100%</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h2 th:text="'Games before ' + ${lastYear}">Games before LAST_YEAR</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Platform</th>
+            <th>Score</th>
+            <th>Trophies</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="game : ${gamesOfOtherYears}">
+            <td th:text="${game.title}">Some Title</td>
+            <td th:text="${game.platform}">Platform</td>
+            <td th:text="${game.score}">5 / 10</td>
+            <td th:text="${game.progress}">100%</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<div id="endOfPage"></div>
+
+<div id="footer" th:insert="fragments/footer :: footer"></div>
+
+</body>
+</html>
