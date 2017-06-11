@@ -13,7 +13,7 @@ import javax.annotation.PostConstruct
 
 @Component
 class LocalGitRepository(
-        val settings: Settings
+        private val settings: Settings
 ) {
 
     @Component
@@ -42,7 +42,7 @@ class LocalGitRepository(
         log.info("GIT: 'remote add origin $originUri'")
     }
 
-    fun refresh() {
+    fun update() {
         with(git.fetch()) {
             setRemote("origin")
             call()

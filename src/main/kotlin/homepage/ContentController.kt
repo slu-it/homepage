@@ -12,8 +12,8 @@ import java.util.stream.Collectors.toList
 
 @Controller
 class ContentController(
-        val gameService: GameService,
-        val socialService: SocialService
+        private val gameService: GameService,
+        private val socialService: SocialService
 ) {
 
     private val gameComparator = compareByDescending<GameData> { it.score }.thenBy { it.title }
@@ -70,6 +70,7 @@ class ContentController(
 
     private fun getGames(filter: (GameModel) -> Boolean): List<GameModel> {
         return gameService.getAll()
+                .stream()
                 .sorted(gameComparator)
                 .map(this::transform)
                 .filter(filter)

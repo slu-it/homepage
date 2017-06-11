@@ -2,24 +2,35 @@ package homepage.social
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import homepage.persistence.LocalGitRepository
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.nio.file.Files
 
 
 @Service
 class SocialService(
-        val repository: LocalGitRepository,
-        val mapper: ObjectMapper
+        private val repository: LocalGitRepository,
+        private val mapper: ObjectMapper
 ) {
 
+    private val log: Logger = LoggerFactory.getLogger(javaClass)
+
+    @Cacheable("socialLinks")
     fun getSocialLinks(): SocialLinks {
-        return Files.list(repository.getWorkingDirectory())
+        val socialLinks = Files.list(repository.getWorkingDirectory())
                 .map { it.toFile() }
                 .filter { it.isFile }
                 .filter { it.nameWithoutExtension == "social-links" }
                 .findFirst()
                 .map { mapper.readValue(it, SocialLinks::class.java) }
-                .orElseGet { SocialLinks() }
+                .orElseGet {
+                    log.debug("fallback to default social links")
+                    SocialLinks()
+                }
+        log.debug("loaded social links: {}", socialLinks)
+        return socialLinks
     }
 
 }

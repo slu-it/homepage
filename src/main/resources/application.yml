@@ -3,3 +3,7 @@ git:
     originUri: "https://github.com/slu-it/homepage-data.git"
 server:
   port: 8080
+logging:
+  level:
+    root: INFO
+    homepage: DEBUG
