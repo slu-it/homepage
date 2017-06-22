@@ -5,7 +5,6 @@ import homepage.business.objects.SocialLinks
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import java.net.URL
-import java.util.stream.Collectors.toList
 
 
 @Service
@@ -21,21 +20,14 @@ class DataProvider(
 
     private fun findSocialLinksConfigData(): SocialLinksData {
         return (repository.findDatum(name = "social-links", extension = "json", dataClass = SocialLinksData::class)
-                ?: throw IllegalStateException("social links configuration data could not be found"))
+                ?: throw SocialLinksConfigurationNotFoundException())
     }
 
-    private fun convert(socialLinksData: SocialLinksData): SocialLinks {
-        val github = socialLinksData.github
-                ?: throw IllegalStateException("GitHub profile URL not configured")
-        val twitter = socialLinksData.twitter
-                ?: throw IllegalStateException("Twitter profile URL not configured")
-        val xing = socialLinksData.xing
-                ?: throw IllegalStateException("Xing profile URL not configured")
-
+    private fun convert(data: SocialLinksData): SocialLinks {
         return SocialLinks(
-                github = URL(github),
-                twitter = URL(twitter),
-                xing = URL(xing)
+                github = URL(data.github ?: throw GitHubNotConfiguredException()),
+                twitter = URL(data.twitter ?: throw TwitterNotConfiguredException()),
+                xing = URL(data.xing ?: throw XingNotConfiguredException())
         )
     }
 
@@ -45,23 +37,41 @@ class DataProvider(
         return gameData.map(this::convert)
     }
 
-    private fun convert(gameData: GameData): Game {
-        val year = gameData.year
-                ?: throw IllegalStateException("$gameData does not declare a year")
-        val title = gameData.title
-                ?: throw IllegalStateException("$gameData does not declare a title")
-        val platform = gameData.platform
-                ?: throw IllegalStateException("$gameData does not declare a platform")
-        val score = gameData.score
-        val progress = gameData.progress
-
+    private fun convert(data: GameData): Game {
         return Game(
-                year = year,
-                title = title,
-                platform = platform,
-                score = score,
-                progress = progress
+                year = data.year ?: throw MissingYearException(data),
+                title = data.title ?: throw MissingTitleException(data),
+                platform = data.platform ?: throw MissingPlatformException(data),
+                score = data.score,
+                progress = data.progress
         )
     }
+
+    abstract class DataProviderException(msg: String) : RuntimeException(msg)
+
+    abstract class SocialLinksException(msg: String) : DataProviderException(msg)
+
+    class SocialLinksConfigurationNotFoundException
+        : SocialLinksException("social links configuration data could not be found")
+
+    class GitHubNotConfiguredException
+        : SocialLinksException("GitHub profile URL not configured")
+
+    class TwitterNotConfiguredException
+        : SocialLinksException("Twitter profile URL not configured")
+
+    class XingNotConfiguredException
+        : SocialLinksException("Xing profile URL not configured")
+
+    abstract class GameException(msg: String) : DataProviderException(msg)
+
+    class MissingYearException(game: GameData)
+        : GameException("Game is missing year data: $game")
+
+    class MissingTitleException(game: GameData)
+        : GameException("Game is missing title data: $game")
+
+    class MissingPlatformException(game: GameData)
+        : GameException("Game is missing platform data: $game")
 
 }
