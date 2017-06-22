@@ -1,7 +1,7 @@
-package homepage.social
+package homepage.data
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import homepage.persistence.LocalGitRepository
+import homepage.business.social.SocialLinks
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.Cacheable
@@ -11,8 +11,8 @@ import java.nio.file.Files
 
 @Service
 class SocialService(
-        private val repository: LocalGitRepository,
-        private val mapper: ObjectMapper
+        private val mapper: ObjectMapper,
+        private val repository: DataRepository
 ) {
 
     private val log: Logger = LoggerFactory.getLogger(javaClass)

@@ -1,20 +1,17 @@
-package homepage.gaming
+package homepage.data
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import homepage.persistence.LocalGitRepository
+import homepage.business.gaming.GameData
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.slf4j.LoggerFactory.*
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
-import java.nio.file.Files
-import java.util.stream.Collectors
+import java.nio.file.Files.*
 import java.util.stream.Collectors.*
-import java.util.stream.Stream
 
 @Service
 class GameService(
-        private val repository: LocalGitRepository,
+        private val repository: DataRepository,
         private val mapper: ObjectMapper
 ) {
 
@@ -24,7 +21,7 @@ class GameService(
     fun getAll(): List<GameData> {
         val gamesFolder = repository.getWorkingDirectory().resolve("games")
         log.debug("loading games from {}", gamesFolder)
-        return Files.list(gamesFolder)
+        return list(gamesFolder)
                 .map { it.toFile() }
                 .filter { it.isFile }
                 .filter { it.extension == "game" }

@@ -1,12 +1,11 @@
-package homepage
+package homepage.ui
 
-import homepage.gaming.GameData
-import homepage.gaming.GameService
-import homepage.social.SocialService
+import homepage.business.gaming.GameData
+import homepage.data.GameService
+import homepage.data.SocialService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
 import java.time.LocalDate
 import java.util.stream.Collectors.toList
 

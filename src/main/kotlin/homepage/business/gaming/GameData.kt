@@ -1,4 +1,4 @@
-package homepage.gaming
+package homepage.business.gaming
 
 data class GameData(
         var year: Int? = null,

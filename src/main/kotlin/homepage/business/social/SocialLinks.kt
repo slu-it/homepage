@@ -1,4 +1,4 @@
-package homepage.social
+package homepage.business.social
 
 data class SocialLinks(
         var github: String? = null,
