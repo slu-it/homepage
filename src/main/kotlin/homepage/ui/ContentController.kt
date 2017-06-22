@@ -1,18 +1,19 @@
 package homepage.ui
 
-import homepage.business.gaming.GameData
-import homepage.data.GameService
-import homepage.data.SocialService
+import homepage.business.games.GameData
+import homepage.business.games.GamesService
+import homepage.data.DataProvider
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import java.time.LocalDate
-import java.util.stream.Collectors.toList
+import java.util.stream.Collectors
+import java.util.stream.Collectors.*
 
 @Controller
 class ContentController(
-        private val gameService: GameService,
-        private val socialService: SocialService
+        private val gameService: GamesService,
+        private val dataProvider: DataProvider
 ) {
 
     private val gameComparator = compareByDescending<GameData> { it.score }.thenBy { it.title }
@@ -35,50 +36,50 @@ class ContentController(
 
     private fun addTemplateData(model: Model) {
         addSocialLinks(model)
+        addTemporalInformation(model)
     }
 
     private fun addSocialLinks(model: Model) {
-        model.addAttribute("socialLinks", socialService.getSocialLinks())
+        model.addAttribute("socialLinks", dataProvider.getSocialLinks())
     }
 
-    private fun addGamesOfCurrentYearData(model: Model) {
+    private fun addTemporalInformation(model: Model) {
         val currentYear = LocalDate.now().year
-        val games = getGames({ it.year == currentYear })
-        with(model) {
-            addAttribute("gamesOfCurrentYear", games)
-            addAttribute("currentYear", currentYear)
-        }
-    }
-
-    private fun addGamesOfLastYearData(model: Model) {
         val lastYear = LocalDate.now().minusYears(1).year
-        val games = getGames({ it.year == lastYear })
-        with(model) {
-            addAttribute("gamesOfLastYear", games)
+        model.apply {
+            addAttribute("currentYear", currentYear)
             addAttribute("lastYear", lastYear)
         }
     }
 
-    private fun addGamesOfOtherYears(model: Model) {
-        val lastYear = LocalDate.now().minusYears(1).year
-        val games = getGames({ it.year < lastYear })
-        with(model) {
-            addAttribute("gamesOfOtherYears", games)
-        }
+    private fun addGamesOfCurrentYearData(model: Model) {
+        val games = gameService.getGamesOfCurrentYear()
+        val gamesModel = toModel(games)
+        model.addAttribute("gamesOfCurrentYear", gamesModel)
     }
 
-    private fun getGames(filter: (GameModel) -> Boolean): List<GameModel> {
-        return gameService.getAll()
-                .stream()
+    private fun addGamesOfLastYearData(model: Model) {
+        val games = gameService.getGamesOfLastYear()
+        val gamesModel = toModel(games)
+        model.addAttribute("gamesOfLastYear", gamesModel)
+    }
+
+    private fun addGamesOfOtherYears(model: Model) {
+        val games = gameService.getGamesOfOtherYears()
+        val gamesModel = toModel(games)
+        model.addAttribute("gamesOfOtherYears", gamesModel)
+    }
+
+    private fun toModel(games: List<GameData>): List<GameModel> {
+        return games.stream()
                 .sorted(gameComparator)
                 .map(this::transform)
-                .filter(filter)
                 .collect(toList())
     }
 
-    private fun transform(gameData: GameData): GameModel {
+    private fun transform(data: GameData): GameModel {
         val model = GameModel()
-        with(gameData) {
+        with(data) {
             year?.let { model.year = it }
             title?.let { model.title = it }
             platform?.let { model.platform = it }
@@ -88,7 +89,7 @@ class ContentController(
         return model
     }
 
-    class GameModel(
+    data class GameModel(
             var year: Int = 0,
             var title: String = "-",
             var platform: String = "-",

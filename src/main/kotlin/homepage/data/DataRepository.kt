@@ -55,10 +55,6 @@ class DataRepository(
         }
     }
 
-    fun getWorkingDirectory(): Path {
-        return git.repository.workTree.toPath()
-    }
-
     fun <T : Any> findDatum(path: String = "", name: String, extension: String = "", dataClass: KClass<T>): T? {
         val workingDirectory = getWorkingDirectory()
         val searchPath = if (path.isEmpty()) workingDirectory else workingDirectory.resolve(path)
@@ -81,6 +77,10 @@ class DataRepository(
                 .filter { it.extension == extension }
                 .map { mapper.readValue(it, dataClass.java) }
                 .collect(toList())
+    }
+
+    private fun getWorkingDirectory(): Path {
+        return git.repository.workTree.toPath()
     }
 
 }
