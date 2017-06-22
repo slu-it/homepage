@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-interface JsonSerializableContract<T : Any> {
+internal interface JsonSerializableContract<T : Any> {
 
     val minInstance: T
     val maxInstance: T

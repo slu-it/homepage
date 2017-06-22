@@ -6,13 +6,15 @@ import homepage.data.DataProvider
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
+import java.time.Clock
 import java.time.LocalDate
 import java.util.stream.Collectors.toList
 
 @Controller
 class PageController(
         private val gameService: GamesService,
-        private val dataProvider: DataProvider
+        private val dataProvider: DataProvider,
+        private val clock: Clock
 ) {
 
     private val gameComparator = compareByDescending<Game> { it.score }.thenBy { it.title }
@@ -43,8 +45,8 @@ class PageController(
     }
 
     private fun addTemporalInformation(model: Model) {
-        val currentYear = LocalDate.now().year
-        val lastYear = LocalDate.now().minusYears(1).year
+        val currentYear = LocalDate.now(clock).year
+        val lastYear = LocalDate.now(clock).minusYears(1).year
         model.apply {
             addAttribute("currentYear", currentYear)
             addAttribute("lastYear", lastYear)
@@ -79,9 +81,9 @@ class PageController(
     private fun transform(data: Game): GameModel {
         val model = GameModel()
         with(data) {
-            year?.let { model.year = it }
-            title?.let { model.title = it }
-            platform?.let { model.platform = it }
+            year.let { model.year = it }
+            title.let { model.title = it }
+            platform.let { model.platform = it }
             score?.let { model.score = "${it} / 10" }
             progress?.let { model.progress = "${(it * 100).toInt()}%" }
         }
