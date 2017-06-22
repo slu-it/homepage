@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @ExtendWith(SpringExtension::class)
 @WebMvcTest(ManagementController::class)
-internal class ManagementControllerTest {
+internal class ManagementControllerIntTest {
 
     @Autowired
     lateinit var mvc: MockMvc

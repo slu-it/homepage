@@ -1,22 +1,21 @@
 package homepage.ui
 
-import homepage.business.games.GameData
-import homepage.business.games.GamesService
+import homepage.business.GamesService
+import homepage.business.objects.Game
 import homepage.data.DataProvider
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.GetMapping
 import java.time.LocalDate
-import java.util.stream.Collectors
-import java.util.stream.Collectors.*
+import java.util.stream.Collectors.toList
 
 @Controller
-class ContentController(
+class PageController(
         private val gameService: GamesService,
         private val dataProvider: DataProvider
 ) {
 
-    private val gameComparator = compareByDescending<GameData> { it.score }.thenBy { it.title }
+    private val gameComparator = compareByDescending<Game> { it.score }.thenBy { it.title }
 
     @GetMapping("/")
     fun index(model: Model): String {
@@ -70,14 +69,14 @@ class ContentController(
         model.addAttribute("gamesOfOtherYears", gamesModel)
     }
 
-    private fun toModel(games: List<GameData>): List<GameModel> {
+    private fun toModel(games: List<Game>): List<GameModel> {
         return games.stream()
                 .sorted(gameComparator)
                 .map(this::transform)
                 .collect(toList())
     }
 
-    private fun transform(data: GameData): GameModel {
+    private fun transform(data: Game): GameModel {
         val model = GameModel()
         with(data) {
             year?.let { model.year = it }

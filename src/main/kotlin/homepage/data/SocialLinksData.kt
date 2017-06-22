@@ -1,6 +1,6 @@
-package homepage.business.social
+package homepage.data
 
-data class SocialLinks(
+data class SocialLinksData(
         var github: String? = null,
         var twitter: String? = null,
         var xing: String? = null
