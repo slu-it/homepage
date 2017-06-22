@@ -55,10 +55,9 @@ class DataRepository(
         }
     }
 
-    fun <T : Any> findDatum(path: String = "", name: String, extension: String = "", dataClass: KClass<T>): T? {
+    fun <T : Any> findDatum(path: String = "", fileName: String, dataClass: KClass<T>): T? {
         val workingDirectory = getWorkingDirectory()
         val searchPath = if (path.isEmpty()) workingDirectory else workingDirectory.resolve(path)
-        val fileName = if (extension.isEmpty()) name else "$name.$extension"
         return Files.list(searchPath)
                 .map { it.toFile() }
                 .filter { it.isFile }
@@ -79,7 +78,7 @@ class DataRepository(
                 .collect(toList())
     }
 
-    private fun getWorkingDirectory(): Path {
+    internal fun getWorkingDirectory(): Path {
         return git.repository.workTree.toPath()
     }
 

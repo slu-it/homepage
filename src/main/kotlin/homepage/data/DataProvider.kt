@@ -19,7 +19,7 @@ class DataProvider(
     }
 
     private fun findSocialLinksConfigData(): SocialLinksData {
-        return (repository.findDatum(name = "social-links", extension = "json", dataClass = SocialLinksData::class)
+        return (repository.findDatum(fileName = "social-links.json", dataClass = SocialLinksData::class)
                 ?: throw SocialLinksConfigurationNotFoundException())
     }
 

@@ -61,7 +61,7 @@ internal class DataProviderTest {
 
         fun setupRepositoryToFind(data: SocialLinksData?) {
             doReturn(data).whenever(repository)
-                    .findDatum(name = "social-links", extension = "json", dataClass = SocialLinksData::class)
+                    .findDatum(fileName = "social-links.json", dataClass = SocialLinksData::class)
         }
 
         fun socialLinksData(): SocialLinksData {

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.SchedulingConfigurer
 import java.nio.file.Files
+import java.time.Clock
 import java.util.concurrent.TimeUnit
 
 
@@ -19,18 +20,12 @@ import java.util.concurrent.TimeUnit
 @SpringBootApplication
 class Application {
 
-    private val log: Logger = LoggerFactory.getLogger(javaClass)
+    @Bean
+    fun clock(): Clock = Clock.systemUTC()
 
     @Bean
     fun schedulingConfigurer(applicationManagement: ApplicationManagement): SchedulingConfigurer = SchedulingConfigurer {
         it.addFixedDelayTask({ applicationManagement.refreshApplication() }, TimeUnit.HOURS.toMillis(1))
-    }
-
-    @Bean
-    fun git(): Git {
-        val localGitRepository = Files.createTempDirectory("git-repo").toFile().apply { deleteOnExit() }
-        log.info("temporary folder for local GIT repository: {}", localGitRepository)
-        return Git.init().setDirectory(localGitRepository).call()
     }
 
     companion object {
