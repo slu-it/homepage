@@ -92,6 +92,37 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>info.novatec.testit</groupId>
+            <artifactId>webtester-core</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.novatec.testit</groupId>
+            <artifactId>webtester-kotlin</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.novatec.testit</groupId>
+            <artifactId>webtester-support-assertj3</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.novatec.testit</groupId>
+            <artifactId>webtester-support-junit5</artifactId>
+            <version>2.3.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-chrome-driver</artifactId>
+            <version>3.4.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
