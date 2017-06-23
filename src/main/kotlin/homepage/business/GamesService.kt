@@ -27,7 +27,7 @@ class GamesService(
     fun getGamesOfOtherYears(): List<Game> {
         val lastYear = LocalDate.now(clock).minusYears(1).year
         return dataProvider.getGames()
-                .filter { it.year!! < lastYear }
+                .filter { it.year < lastYear }
     }
 
 }
