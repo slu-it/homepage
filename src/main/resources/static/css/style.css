@@ -96,7 +96,7 @@ td {
 }
 
 #endOfPage {
-    margin-bottom: 100px;
+    margin-bottom: 115px;
 }
 
 #footer {
@@ -107,7 +107,7 @@ td {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 60px;
+    height: 75px;
 }
 
 #footer .socialIcon {
@@ -116,3 +116,6 @@ td {
     margin-top: 10px;
 }
 
+#footer #copyright {
+    font-size: 0.75em;
+}
