@@ -1,6 +1,7 @@
 git:
   repository:
-    originUri: "https://github.com/slu-it/homepage-data.git"
+    uri: "https://github.com/slu-it/homepage-data.git"
+    branch: "master"
 server:
   port: 8080
 logging:

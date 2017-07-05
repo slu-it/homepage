@@ -10,7 +10,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.stream.Collectors
 import java.util.stream.Collectors.*
 import javax.annotation.PostConstruct
 import kotlin.reflect.KClass
@@ -25,14 +24,15 @@ class DataRepository(
     @Component
     @ConfigurationProperties("git.repository")
     data class Settings(
-            var originUri: String? = null
+            var uri: String? = null,
+            var branch: String? = null
     )
 
     private val log: Logger = getLogger(javaClass)
 
     @PostConstruct
     fun init() {
-        val originUri = settings.originUri!!
+        val originUri = settings.uri!!
         with(git.remoteAdd()) {
             setName("origin")
             setUri(URIish(originUri))
@@ -49,9 +49,9 @@ class DataRepository(
         }
         with(git.reset()) {
             setMode(ResetCommand.ResetType.HARD)
-            setRef("origin/master")
+            setRef("origin/${settings.branch}")
             call()
-            log.info("GIT: 'reset origin/master --hard'")
+            log.info("GIT: 'reset origin/${settings.branch} --hard'")
         }
     }
 
