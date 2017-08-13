@@ -11,8 +11,9 @@ internal class GameTest {
     @Test
     fun `valid games can be instantiated`() {
         Game(year = 2017, title = "A Game", platform = "PS4")
-        Game(year = 2017, title = "A Game", platform = "PS4", score = 10, progress = 1.0f)
-        Game(year = 2017, title = "A Game", platform = "PS4", score = 0, progress = 0.0f)
+        Game(year = 2017, title = "A Game", platform = "PS4", score = 10, progress = 1.0f, finished = true)
+        Game(year = 2017, title = "A Game", platform = "PS4", score = 0, progress = 0.0f, finished = false)
+        Game(year = 2017, title = "A Game", platform = "PS4", score = 0, progress = 0.0f, finished = false)
     }
 
     @Test

@@ -5,7 +5,8 @@ data class Game(
         val title: String,
         val platform: String,
         val score: Int? = null,
-        val progress: Float? = null
+        val progress: Float? = null,
+        val finished: Boolean = false
 ) {
 
     init {

@@ -95,6 +95,11 @@ td {
     margin: auto;
 }
 
+.finished-check {
+    text-align: center;
+    height: 15px;
+}
+
 #endOfPage {
     margin-bottom: 115px;
 }

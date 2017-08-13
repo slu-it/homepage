@@ -86,6 +86,7 @@ class PageController(
             platform.let { model.platform = it }
             score?.let { model.score = "${it} / 10" }
             progress?.let { model.progress = "${(it * 100).toInt()}%" }
+            finished.let { model.finished = it }
         }
         return model
     }
@@ -95,7 +96,8 @@ class PageController(
             var title: String = "-",
             var platform: String = "-",
             var score: String = "-",
-            var progress: String = "-"
+            var progress: String = "-",
+            var finished: Boolean = false
     )
 
 }

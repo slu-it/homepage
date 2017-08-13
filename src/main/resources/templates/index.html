@@ -4,8 +4,8 @@
     <title>SLU-IT</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="../static/css/style.css"
-            th:href="@{/css/style.css}"
-            rel="stylesheet" media="screen"/>
+          th:href="@{/css/style.css}"
+          rel="stylesheet" media="screen"/>
 </head>
 <body>
 
@@ -57,6 +57,7 @@
             <th>Title</th>
             <th>Platform</th>
             <th>Score</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -64,6 +65,12 @@
             <td th:text="${game.title}">Some Title</td>
             <td th:text="${game.platform}">Platform</td>
             <td th:text="${game.score}">5 / 10</td>
+            <td>
+                <img class="finished-check"
+                     src="../static/img/check.png"
+                     th:src="@{/img/check.png}"
+                     th:if="${game.finished}">
+            </td>
         </tr>
         </tbody>
     </table>

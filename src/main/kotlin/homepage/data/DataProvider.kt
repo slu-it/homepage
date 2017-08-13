@@ -43,7 +43,8 @@ class DataProvider(
                 title = data.title ?: throw MissingTitleException(data),
                 platform = data.platform ?: throw MissingPlatformException(data),
                 score = data.score,
-                progress = data.progress
+                progress = data.progress,
+                finished = data.finished ?: false
         )
     }
 
