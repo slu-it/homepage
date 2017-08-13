@@ -95,9 +95,17 @@ td {
     margin: auto;
 }
 
-.finished-check {
+#games table td {
+    vertical-align: top;
+}
+
+#games .finished-check {
     text-align: center;
     height: 15px;
+}
+
+#games .dlcTitle {
+    font-size: 0.8em;
 }
 
 #endOfPage {

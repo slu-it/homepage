@@ -122,11 +122,33 @@ internal class DataProviderTest {
         }
 
         fun gameData(): GameData {
-            return GameData(year = 2017, title = "A Game", platform = "PS4", score = 10, progress = 1.0f)
+            return GameData(
+                    year = 2017,
+                    title = "A Game",
+                    platform = "PS4",
+                    score = 10,
+                    progress = 1.0f,
+                    finished = true,
+                    dlc = mutableListOf(
+                            GameData.DlcData(title = "Some DLC", finished = true),
+                            GameData.DlcData(title = "Some Other DLC", finished = false)
+                    )
+            )
         }
 
         fun game(): Game {
-            return Game(year = 2017, title = "A Game", platform = "PS4", score = 10, progress = 1.0f)
+            return Game(
+                    year = 2017,
+                    title = "A Game",
+                    platform = "PS4",
+                    score = 10,
+                    progress = 1.0f,
+                    finished = true,
+                    dlc = listOf(
+                            Game.Dlc(title = "Some DLC", finished = true),
+                            Game.Dlc(title = "Some Other DLC", finished = false)
+                    )
+            )
         }
 
     }

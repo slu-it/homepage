@@ -89,4 +89,28 @@ internal class GameTest {
 
     }
 
+    @Nested
+    inner class `Game DLC` {
+
+        @Test
+        fun `valid game with DLC can be instantiated`() {
+            Game(
+                    year = 2017,
+                    title = "A Game",
+                    platform = "PS4",
+                    dlc = listOf(
+                            Game.Dlc(title = "Some DLC"),
+                            Game.Dlc(title = "Some DLC", finished = true))
+            )
+        }
+
+        @Test
+        fun `the title of a DLC must not be blank`() {
+            assertThrows(IllegalStateException::class.java, {
+                Game.Dlc(title = "")
+            })
+        }
+
+    }
+
 }

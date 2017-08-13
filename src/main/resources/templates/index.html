@@ -57,20 +57,28 @@
             <th>Title</th>
             <th>Platform</th>
             <th>Score</th>
-            <th></th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="game : ${gamesOfCurrentYear}">
-            <td th:text="${game.title}">Some Title</td>
+            <td>
+                <div>
+                    <span th:text="${game.title}">Some Title</span>
+                    <img class="finished-check"
+                         src="../static/img/check.png"
+                         th:src="@{/img/check.png}"
+                         th:if="${game.finished}">
+                </div>
+                <div th:each="dlc : ${game.dlc}">
+                    <span class="dlcTitle" th:text="' - ' + ${dlc.title}"> - DLC Title</span>
+                    <img class="finished-check"
+                         src="../static/img/check.png"
+                         th:src="@{/img/check.png}"
+                         th:if="${dlc.finished}">
+                </div>
+            </td>
             <td th:text="${game.platform}">Platform</td>
             <td th:text="${game.score}">5 / 10</td>
-            <td>
-                <img class="finished-check"
-                     src="../static/img/check.png"
-                     th:src="@{/img/check.png}"
-                     th:if="${game.finished}">
-            </td>
         </tr>
         </tbody>
     </table>

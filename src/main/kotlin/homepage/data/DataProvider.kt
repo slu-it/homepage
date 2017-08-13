@@ -44,7 +44,13 @@ class DataProvider(
                 platform = data.platform ?: throw MissingPlatformException(data),
                 score = data.score,
                 progress = data.progress,
-                finished = data.finished ?: false
+                finished = data.finished ?: false,
+                dlc = data.dlc.map {
+                    Game.Dlc(
+                            title = it.title ?: throw MissingDlcTitleException(it),
+                            finished = it.finished ?: false
+                    )
+                }
         )
     }
 
@@ -71,6 +77,9 @@ class DataProvider(
 
     class MissingTitleException(game: GameData)
         : GameException("Game is missing title data: $game")
+
+    class MissingDlcTitleException(dlc: GameData.DlcData)
+        : GameException("Game DLC is missing title data: $dlc")
 
     class MissingPlatformException(game: GameData)
         : GameException("Game is missing platform data: $game")

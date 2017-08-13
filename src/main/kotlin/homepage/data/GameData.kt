@@ -9,5 +9,13 @@ data class GameData(
         var platform: String? = null,
         var score: Int? = null,
         var progress: Float? = null,
-        var finished: Boolean? = null
-)
+        var finished: Boolean? = null,
+        var dlc: MutableList<DlcData> = mutableListOf()
+) {
+
+    data class DlcData(
+            var title: String? = null,
+            var finished: Boolean? = null
+    )
+
+}

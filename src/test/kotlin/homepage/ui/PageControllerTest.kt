@@ -111,7 +111,29 @@ internal class PageControllerTest {
     }
 
     fun game(title: String): Pair<Game, GameModel> {
-        return Game(year = 2017, title = title, platform = "PS4") to GameModel(year = 2017, title = title, platform = "PS4")
+        val game = Game(
+                year = 2017,
+                title = title,
+                platform = "PS4",
+                progress = 0.5f,
+                score = 5,
+                finished = true,
+                dlc = listOf(
+                        Game.Dlc(title = "Some DLC", finished = true)
+                )
+        )
+        val gameModel = GameModel(
+                year = 2017,
+                title = title,
+                platform = "PS4",
+                progress = "50%",
+                score = "5 / 10",
+                finished = true,
+                dlc = mutableListOf(
+                        GameModel.DlcModel(title = "Some DLC", finished = true)
+                )
+        )
+        return game to gameModel
     }
 
 }

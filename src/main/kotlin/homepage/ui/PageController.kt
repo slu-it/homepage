@@ -87,6 +87,14 @@ class PageController(
             score?.let { model.score = "${it} / 10" }
             progress?.let { model.progress = "${(it * 100).toInt()}%" }
             finished.let { model.finished = it }
+            dlc.let {
+                model.dlc = it.map {
+                    GameModel.DlcModel(
+                            title = it.title,
+                            finished = it.finished
+                    )
+                }
+            }
         }
         return model
     }
@@ -97,7 +105,13 @@ class PageController(
             var platform: String = "-",
             var score: String = "-",
             var progress: String = "-",
-            var finished: Boolean = false
-    )
+            var finished: Boolean = false,
+            var dlc: List<DlcModel> = listOf()
+    ) {
+        data class DlcModel(
+                var title: String = "-",
+                var finished: Boolean = false
+        )
+    }
 
 }

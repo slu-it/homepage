@@ -14,6 +14,12 @@ internal class GameDataTest : JsonSerializableContract<GameData> {
         score = 10
         progress = 1.00f
         finished = true
+        dlc = mutableListOf(
+                GameData.DlcData().apply {
+                    title = "Some DLC"
+                    finished = true
+                }
+        )
     }
 
 
@@ -24,9 +30,6 @@ internal class GameDataTest : JsonSerializableContract<GameData> {
           "year": 2015,
           "title": "Bloodborne",
           "platform": "PS4",
-          "score": 10,
-          "progress": 1.00,
-          "finished": true,
           "unknown": true
         }
         """.trimIndent()
