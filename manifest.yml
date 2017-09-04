@@ -1,0 +1,11 @@
+---
+applications:
+  - name: homepage
+    buildpack: https://github.com/cloudfoundry/java-buildpack.git#v3.19
+    path: target/homepage.jar
+    instances: 1
+    memory: 256M
+    disk_quota: 256M
+    host: slu-it-homepage
+    #env:
+      #JBP_CONFIG_OPEN_JDK_JRE: '{ memory_calculator: { class_count: 750, stack_threads: 75 } }'
