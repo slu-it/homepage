@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import org.springframework.boot.web.server.LocalServerPort
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -23,7 +24,7 @@ import kotlin.reflect.KClass
 
 @EnableWebTesterExtensions
 @ExtendWith(SpringExtension::class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = RANDOM_PORT)
 internal class ApplicationSysTest {
 
     companion object {
@@ -40,36 +41,32 @@ internal class ApplicationSysTest {
         assertThat(response.statusCode).isSameAs(HttpStatus.OK)
     }
 
-    @Nested
-    inner class `index page` : PageContract() {
-        override val contextPath = "/"
+    @Test
+    fun `index page - header is displayed`() {
+        val page = openBaseUrl("/", BasePage::class)
+        assertThat(page.headerIsDisplayed()).isTrue()
     }
 
-    @Nested
-    inner class `games page` : PageContract() {
-        override val contextPath = "/games"
+    @Test
+    fun `index page - footer is displayed`() {
+        val page = openBaseUrl("/", BasePage::class)
+        assertThat(page.footerIsDisplayed()).isTrue()
     }
 
-    abstract inner class PageContract {
+    @Test
+    fun `games page - header is displayed`() {
+        val page = openBaseUrl("/games", BasePage::class)
+        assertThat(page.headerIsDisplayed()).isTrue()
+    }
 
-        abstract val contextPath: String
+    @Test
+    fun `games page - footer is displayed`() {
+        val page = openBaseUrl("/games", BasePage::class)
+        assertThat(page.footerIsDisplayed()).isTrue()
+    }
 
-        @Test
-        fun `header is displayed`() {
-            val page = openBaseUrl(BasePage::class)
-            assertThat(page.headerIsDisplayed()).isTrue()
-        }
-
-        @Test
-        fun `footer is displayed`() {
-            val page = openBaseUrl(BasePage::class)
-            assertThat(page.footerIsDisplayed()).isTrue()
-        }
-
-        fun <T : Page> openBaseUrl(pageClass: KClass<T>): T {
-            return browser.open().url(baseUrl(contextPath), pageClass.java)
-        }
-
+    fun <T : Page> openBaseUrl(contextPath: String, pageClass: KClass<T>): T {
+        return browser.open().url(baseUrl(contextPath), pageClass.java)
     }
 
     fun baseUrl(contextPath: String) = "http://localhost:$port$contextPath"
