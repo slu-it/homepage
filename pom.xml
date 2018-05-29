@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.1.RELEASE</version>
+        <version>2.0.2.RELEASE</version>
     </parent>
 
     <groupId>de.slu-it</groupId>
@@ -15,18 +15,19 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.2.31</kotlin.version>
+        <kotlin.version>1.2.41</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <docker.image.prefix>sluit</docker.image.prefix>
 
-        <junit-jupiter.version>5.1.1</junit-jupiter.version>
+        <junit-jupiter.version>5.2.0</junit-jupiter.version>
         <jgit.version>4.11.0.201803080745-r</jgit.version>
         <mockito-kotlin.version>1.5.0</mockito-kotlin.version>
-        <selenium-chrome-driver.version>3.11.0</selenium-chrome-driver.version>
         <webtester.version>2.5.0</webtester.version>
+        <htmlunit-driver.version>2.31.0</htmlunit-driver.version>
+        <htmlunit.version>2.31</htmlunit.version>
     </properties>
 
     <dependencies>
@@ -125,11 +126,16 @@
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-            <version>${selenium-chrome-driver.version}</version>
+            <artifactId>htmlunit-driver</artifactId>
+            <version>${htmlunit-driver.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>net.sourceforge.htmlunit</groupId>
+            <artifactId>htmlunit</artifactId>
+            <version>${htmlunit.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -178,12 +184,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
+                <version>2.21.0</version>
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
                         <artifactId>junit-platform-surefire-provider</artifactId>
-                        <version>1.1.1</version>
+                        <version>1.2.0</version>
                     </dependency>
                     <dependency>
                         <groupId>org.junit.jupiter</groupId>

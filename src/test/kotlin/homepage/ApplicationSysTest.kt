@@ -1,16 +1,19 @@
 package homepage
 
 import info.novatec.testit.webtester.browser.Browser
-import info.novatec.testit.webtester.browser.factories.ChromeFactory
+import info.novatec.testit.webtester.browser.BrowserFactory
+import info.novatec.testit.webtester.browser.WebDriverBrowser
+import info.novatec.testit.webtester.browser.proxy.ProxyConfiguration
 import info.novatec.testit.webtester.junit5.EnableWebTesterExtensions
 import info.novatec.testit.webtester.junit5.extensions.browsers.CreateUsing
 import info.novatec.testit.webtester.junit5.extensions.browsers.Managed
 import info.novatec.testit.webtester.kotlin.pages.Page
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.openqa.selenium.htmlunit.HtmlUnitDriver
+import org.openqa.selenium.remote.DesiredCapabilities
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT
 import org.springframework.boot.web.server.LocalServerPort
@@ -22,13 +25,20 @@ import org.springframework.web.client.getForEntity
 import pages.BasePage
 import kotlin.reflect.KClass
 
+
+internal class HtmlUnitFactory : BrowserFactory {
+    override fun createBrowser(): Browser = WebDriverBrowser.buildForWebDriver(HtmlUnitDriver())
+    override fun createBrowser(p0: DesiredCapabilities?): Browser = createBrowser()
+    override fun withProxyConfiguration(p0: ProxyConfiguration?): BrowserFactory = this
+}
+
 @EnableWebTesterExtensions
 @ExtendWith(SpringExtension::class)
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 internal class ApplicationSysTest {
 
     companion object {
-        @JvmStatic @Managed @CreateUsing(ChromeFactory::class) lateinit var browser: Browser
+        @JvmStatic @Managed @CreateUsing(HtmlUnitFactory::class) lateinit var browser: Browser
     }
 
     @LocalServerPort
