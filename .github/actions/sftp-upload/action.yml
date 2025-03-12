@@ -1,0 +1,39 @@
+name: sftp-upload
+description: "Uploads the content of a local folder to a remote SFTP folder."
+
+inputs:
+  server:
+    description: "The SFTP server to connect to."
+    required: true
+  port:
+    description: "The SFTP port to use. Defaults to 22."
+    required: false
+    default: "22"
+  username:
+    description: "The username to use for the SFTP connection."
+    required: true
+  password:
+    description: "The password to use for the SFTP connection."
+    required: true
+  local-folder:
+    description: "The local folder to upload."
+    required: true
+  remote-folder:
+    description: "The remote folder to upload to."
+    required: false
+    default: "."
+
+runs:
+  using: composite
+  steps:
+    - name: "Install 'sshpass'"
+      shell: bash
+      run: sudo apt-get install -y sshpass
+    - name: "Upload '${{ inputs.local-folder }}' to remote '${{ inputs.remote-folder }}'"
+      shell: bash
+      run: |
+        sshpass -p "${{ inputs.password }}" sftp -o StrictHostKeyChecking=no ${{ inputs.username }}@${{ inputs.server }} <<EOF
+        cd ${{ inputs.remote-folder }}
+        put -r ./${{ inputs.local-folder }}/*
+        exit
+        EOF

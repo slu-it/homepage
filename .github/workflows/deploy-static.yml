@@ -1,0 +1,21 @@
+name: deploy-static
+run-name: "Deploy Static Homepage"
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - static/**
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/sftp-upload
+        with:
+          server: ${{ secrets.server }}
+          username: ${{ secrets.username }}
+          password: ${{ secrets.password }}
+          local-folder: static

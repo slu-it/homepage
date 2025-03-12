@@ -1,0 +1,65 @@
+body {
+    background-color: #114B5F;
+    font-family: "Verdana", "Arial", "Sans-serif", serif;
+    font-size: 1em;
+    color: #ffffff;
+    margin: 0 0 0 0;
+}
+
+.seperator {
+  width: 20em;
+}
+
+.identity {
+  text-align: center;
+  margin: 10em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.identityIconS {
+  height: 3em;
+  margin: 0.5em;
+}
+
+.identityIcon {
+  height: 4em;
+  margin: 0.5em;
+}
+
+.identityIconL {
+  height: 6em;
+  margin: 0.5em;
+}
+
+.languageIcon {
+  height: 2em;
+  margin: 0.5em;
+  padding-bottom: 2em;
+}
+
+#memoji {
+  position: fixed;
+  bottom: 64px;
+  left: 0;
+  right: 0;
+  width: 10em;
+  z-index: -1;
+}
+
+#footer {
+    text-align: center;
+    border-top: .1em solid #000000;
+    background-color: #413C58;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 65px;
+}
+
+#footer .linkIcon {
+    width: 40px;
+    height: 40px;
+    margin-top: 10px;
+}
